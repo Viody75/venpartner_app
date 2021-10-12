@@ -1,6 +1,8 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:venpartner/view/auth/upload_photo/guide_photo_page.dart';
+import 'package:venpartner/view/camera_sample.dart';
 import 'package:venpartner/widgets/outlined_button.dart';
 import 'package:venpartner/widgets/venvice-button-disabled.dart';
 import 'package:venpartner/widgets/venvice-button.dart';
@@ -14,6 +16,26 @@ class UploadPhotoPage extends StatefulWidget {
 
 class _UploadPhotoPageState extends State<UploadPhotoPage> {
   bool formIsDone = false;
+  var firstCamera;
+
+  Future<void> activateCamera() async {
+    // Ensure that plugin services are initialized so that `availableCameras()`
+    // can be called before `runApp()`
+    WidgetsFlutterBinding.ensureInitialized();
+
+    // Obtain a list of the available cameras on the device.
+    final cameras = await availableCameras();
+
+    // Get a specific camera from the list of available cameras.
+    firstCamera = cameras.first;
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    activateCamera();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +122,10 @@ class _UploadPhotoPageState extends State<UploadPhotoPage> {
                           ),
                           Spacer(),
                           OutlinedBtn('Ambil Foto', onTap: () {
-                            formIsDone = true;
+                            Get.to(() => TakePictureScreen(
+                                  // Pass the appropriate camera to the TakePictureScreen widget.
+                                  camera: firstCamera,
+                                ));
                           }, radius: 18, dWidth: 100, dHeight: 26)
                         ],
                       ),

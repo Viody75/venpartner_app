@@ -15,7 +15,6 @@ class UploadKtpPage extends StatefulWidget {
 
 class _UploadKtpPageState extends State<UploadKtpPage> {
   bool formIsDone = false;
-
   final noKtpFocus = FocusNode();
   final bDateFocus = FocusNode();
   final bPlaceFocus = FocusNode();
