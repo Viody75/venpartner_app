@@ -364,6 +364,93 @@ class _CompletingProfilePageState extends State<CompletingProfilePage> {
                                   Spacer(),
                                   IconButton(
                                       onPressed: () {
+                                        Get.defaultDialog(
+                                          title: "Pilih Domisili",
+                                          backgroundColor: Colors.white,
+                                          barrierDismissible: false,
+                                          radius: 10,
+                                          content: Container(
+                                              height: 300,
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    height: 50,
+                                                    margin:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 12),
+                                                    // decoration: isSearchActive
+                                                    //     ? MyStyle.textBoxActive()
+                                                    //     : MyStyle.textBoxInActive(),
+                                                    decoration: MyStyle
+                                                        .textBoxInActive(),
+                                                    child: Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Container(
+                                                          width: 50,
+                                                          height: 50,
+                                                          child: Center(
+                                                            child: Icon(
+                                                                Icons.search),
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                          child: TextFormField(
+                                                            // focusNode: searchFocus,
+                                                            decoration: MyStyle
+                                                                .myInputDecor(
+                                                                    'Cari Domisili'),
+                                                            textInputAction:
+                                                                TextInputAction
+                                                                    .next,
+                                                            onEditingComplete:
+                                                                () {
+                                                              FocusScope.of(
+                                                                      context)
+                                                                  .nextFocus();
+                                                            },
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Spacer(),
+                                                  Container(
+                                                    height: 240,
+                                                    width: 300,
+                                                    margin:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 6),
+                                                    child: ListView.separated(
+                                                      itemCount: 20,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        return InkWell(
+                                                          onTap: () {
+                                                            Get.back();
+                                                          },
+                                                          child: Container(
+                                                            child: Text(
+                                                              'Balikpapan',
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                      separatorBuilder:
+                                                          (context, index) {
+                                                        return Divider();
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
+                                              )),
+                                        );
                                         setState(() {
                                           formIsDone = true;
                                         });

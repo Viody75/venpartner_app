@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:venpartner/view/auth/upload_photo/camera_photo_page.dart';
 import 'package:venpartner/view/auth/upload_photo/guide_photo_page.dart';
 import 'package:venpartner/view/camera_sample.dart';
 import 'package:venpartner/widgets/outlined_button.dart';
@@ -122,7 +123,7 @@ class _UploadPhotoPageState extends State<UploadPhotoPage> {
                           ),
                           Spacer(),
                           OutlinedBtn('Ambil Foto', onTap: () {
-                            Get.to(() => TakePictureScreen(
+                            Get.to(() => TakePhotoPage(
                                   // Pass the appropriate camera to the TakePictureScreen widget.
                                   camera: firstCamera,
                                 ));

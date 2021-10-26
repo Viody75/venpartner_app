@@ -7,18 +7,13 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:venpartner/view/splashscreen.dart';
 
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  
   runApp(MyApp());
 }
-
-
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("Handling a background message: ${message.messageId}");
@@ -70,9 +65,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     activedFCM();
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'VenPartner App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepPurple,
       ),
       home: SplashScreenPage(),
     );

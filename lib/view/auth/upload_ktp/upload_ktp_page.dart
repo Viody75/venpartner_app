@@ -1,6 +1,8 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:venpartner/utils/my_style.dart';
+import 'package:venpartner/view/auth/upload_ktp/camera_ktp_page.dart';
 import 'package:venpartner/view/auth/upload_ktp/guide_ktp_page.dart';
 import 'package:venpartner/widgets/outlined_button.dart';
 import 'package:venpartner/widgets/venvice-button-disabled.dart';
@@ -24,6 +26,20 @@ class _UploadKtpPageState extends State<UploadKtpPage> {
   bool isbDateActive = false;
   bool isbPlaceActive = false;
   bool isExpDateActive = false;
+
+  var firstCamera;
+
+  Future<void> activateCamera() async {
+    // Ensure that plugin services are initialized so that `availableCameras()`
+    // can be called before `runApp()`
+    WidgetsFlutterBinding.ensureInitialized();
+
+    // Obtain a list of the available cameras on the device.
+    final cameras = await availableCameras();
+
+    // Get a specific camera from the list of available cameras.
+    firstCamera = cameras.first;
+  }
 
   @override
   void initState() {
@@ -52,6 +68,7 @@ class _UploadKtpPageState extends State<UploadKtpPage> {
       debugPrint('Name : ' + isExpDateActive.toString());
     });
     super.initState();
+    activateCamera();
   }
 
   @override
@@ -133,13 +150,18 @@ class _UploadKtpPageState extends State<UploadKtpPage> {
                           ),
                           SizedBox(width: 24),
                           Text(
-                            '',
+                            'KTP',
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                           Spacer(),
                           OutlinedBtn('Ambil Foto', onTap: () {
                             formIsDone = true;
+
+                            Get.to(() => TakeKTPPage(
+                                  // Pass the appropriate camera to the TakePictureScreen widget.
+                                  camera: firstCamera,
+                                ));
                           }, radius: 18, dWidth: 100, dHeight: 26)
                         ],
                       ),
@@ -216,6 +238,14 @@ class _UploadKtpPageState extends State<UploadKtpPage> {
                                 return (value != null && value.contains('+62'))
                                     ? 'Tidak Menggunakan +62'
                                     : null;
+                              },
+                              onTap: () {
+                                showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(2000),
+                                  lastDate: DateTime(2025),
+                                );
                               },
                               onEditingComplete: () {
                                 FocusScope.of(context).nextFocus();
