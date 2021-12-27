@@ -37,7 +37,7 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Container(
           width: deviceWidth,
           height: deviceHeight,
-          child: ListView(
+          child: Column(
             children: [
               // top-nav
               Container(
@@ -177,10 +177,11 @@ class _RegisterPageState extends State<RegisterPage> {
                                   });
                                   print("checkbox : $isChecked");
                                 }),
-                            Container(
-                              width: 300,
-                              child: Text(
-                                  'Dengan mendaftar, anda menyetujui Syarat dan Ketentuan serta Kebijakan Privasi'),
+                            Expanded(
+                              child: Container(
+                                child: Text(
+                                    'Dengan mendaftar, anda menyetujui Syarat dan Ketentuan serta Kebijakan Privasi'),
+                              ),
                             )
                           ],
                         ),
@@ -189,6 +190,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
               ),
+
+              Spacer(),
 
               // button
               Container(

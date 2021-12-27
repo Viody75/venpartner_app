@@ -1,12 +1,18 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:venpartner/controller/completing_docs_controller.dart';
 import 'package:venpartner/utils/my_style.dart';
 import 'package:venpartner/view/auth/upload_ktp/camera_ktp_page.dart';
 import 'package:venpartner/view/auth/upload_ktp/guide_ktp_page.dart';
 import 'package:venpartner/widgets/outlined_button.dart';
 import 'package:venpartner/widgets/venvice-button-disabled.dart';
 import 'package:venpartner/widgets/venvice-button.dart';
+
+import '../upload_docs_true_widget.dart';
+import '../upload_docs_widget.dart';
 
 class UploadKtpPage extends StatefulWidget {
   const UploadKtpPage({Key? key}) : super(key: key);
@@ -16,6 +22,22 @@ class UploadKtpPage extends StatefulWidget {
 }
 
 class _UploadKtpPageState extends State<UploadKtpPage> {
+  final _completingDocsController = Get.find<CompletingDocsController>();
+
+  // date
+  DateTime selectedDate = DateTime.now();
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
+  }
+
   bool formIsDone = false;
   final noKtpFocus = FocusNode();
   final bDateFocus = FocusNode();
@@ -103,256 +125,256 @@ class _UploadKtpPageState extends State<UploadKtpPage> {
                 ),
               ),
 
-              Container(
-                width: deviceWidth,
-                height: deviceHeight - 184,
-                child: ListView(
-                  children: [
-                    //info
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-                      color: Colors.orange.shade100,
-                      child: Row(
-                        children: [
-                          Icon(Icons.help),
-                          SizedBox(width: 8),
-                          Container(
-                            width: 250,
-                            child: Text(
-                              'Ikuti panduan foto untuk mempermudah verifikasi dokumen',
-                              style: TextStyle(fontSize: 14),
+              Expanded(
+                child: Container(
+                  width: deviceWidth,
+                  child: ListView(
+                    children: [
+                      //info
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                        color: Colors.orange.shade100,
+                        child: Row(
+                          children: [
+                            Icon(Icons.help),
+                            SizedBox(width: 8),
+                            Container(
+                              width: 250,
+                              child: Text(
+                                'Ikuti panduan foto untuk mempermudah verifikasi dokumen',
+                                style: TextStyle(fontSize: 14),
+                              ),
                             ),
-                          ),
-                          Spacer(),
-                          InkWell(
-                            onTap: () {
-                              Get.to(() => GuideKtpPage());
-                            },
-                            child: Icon(Icons.arrow_forward_ios_rounded),
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 12),
-
-                    //upload foto
-                    Container(
-                      width: deviceWidth,
-                      height: 100,
-                      margin: EdgeInsets.symmetric(horizontal: 18),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            'assets/images/docs-placeholder.png',
-                            width: 80,
-                            height: 80,
-                          ),
-                          SizedBox(width: 24),
-                          Text(
-                            'KTP',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                          Spacer(),
-                          OutlinedBtn('Ambil Foto', onTap: () {
-                            formIsDone = true;
-
-                            Get.to(() => TakeKTPPage(
-                                  // Pass the appropriate camera to the TakePictureScreen widget.
-                                  camera: firstCamera,
-                                ));
-                          }, radius: 18, dWidth: 100, dHeight: 26)
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 12),
-
-                    // Nama Lengkap
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 18),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Nomor KTP',
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          Container(
-                            width: deviceWidth,
-                            height: 50,
-                            margin: EdgeInsets.only(top: 8),
-                            padding: EdgeInsets.only(left: 8),
-                            decoration: isNoKtpActive
-                                ? MyStyle.textBoxActive()
-                                : MyStyle.textBoxInActive(),
-                            child: TextFormField(
-                              focusNode: noKtpFocus,
-                              decoration:
-                                  MyStyle.myInputDecor('cth : 12345678900000'),
-                              textInputAction: TextInputAction.next,
-                              validator: (String? value) {
-                                return (value != null && value.contains('+62'))
-                                    ? 'Tidak Menggunakan +62'
-                                    : null;
-                              },
-                              onEditingComplete: () {
-                                FocusScope.of(context).nextFocus();
-                              },
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                        ],
-                      ),
-                    ),
-
-                    // tanggal lahir
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 18),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Tanggal lahir',
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          Container(
-                            width: deviceWidth,
-                            height: 50,
-                            margin: EdgeInsets.only(top: 8),
-                            padding: EdgeInsets.only(left: 8),
-                            decoration: isbDateActive
-                                ? MyStyle.textBoxActive()
-                                : MyStyle.textBoxInActive(),
-                            child: TextFormField(
-                              focusNode: bDateFocus,
-                              decoration: MyStyle.myInputDecor('25/10/2000'),
-                              textInputAction: TextInputAction.next,
-                              validator: (String? value) {
-                                return (value != null && value.contains('+62'))
-                                    ? 'Tidak Menggunakan +62'
-                                    : null;
-                              },
+                            Spacer(),
+                            InkWell(
                               onTap: () {
-                                showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime(2000),
-                                  lastDate: DateTime(2025),
-                                );
+                                Get.to(() => GuideKtpPage());
                               },
-                              onEditingComplete: () {
-                                FocusScope.of(context).nextFocus();
-                              },
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                        ],
+                              child: Icon(Icons.arrow_forward_ios_rounded),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
+                      SizedBox(height: 12),
 
-                    // tempat lahir
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 18),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Tempat lahir',
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          Container(
-                            width: deviceWidth,
-                            height: 50,
-                            margin: EdgeInsets.only(top: 8),
-                            padding: EdgeInsets.only(left: 8),
-                            decoration: isbPlaceActive
-                                ? MyStyle.textBoxActive()
-                                : MyStyle.textBoxInActive(),
-                            child: TextFormField(
-                              focusNode: bPlaceFocus,
-                              decoration:
-                                  MyStyle.myInputDecor('cth : Balikpapan'),
-                              textInputAction: TextInputAction.next,
-                              validator: (String? value) {
-                                return (value != null && value.contains('+62'))
-                                    ? 'Tidak Menggunakan +62'
-                                    : null;
-                              },
-                              onEditingComplete: () {
-                                FocusScope.of(context).nextFocus();
-                              },
-                            ),
-                          ),
-                          SizedBox(height: 4),
-                          Text(
-                            'Isi dengan yang tertera di KTP',
-                            style: TextStyle(fontSize: 14, color: Colors.grey),
-                          ),
-                          SizedBox(height: 20),
-                        ],
-                      ),
-                    ),
+                      //upload ktp
+                      GetBuilder<CompletingDocsController>(builder: (context) {
+                        return File(_completingDocsController.ktpImage.path)
+                                    .toString() ==
+                                File('').toString()
+                            ? UploadDocsWidget(
+                                name: 'KTP',
+                                status: 'Unggah Dokumen',
+                                onTap: () {
+                                  print('ktp');
+                                  Get.to(() => TakeKTPPage(
+                                        camera: firstCamera,
+                                      ));
+                                },
+                              )
+                            : UploadDocsTrueWidget(
+                                name: 'KTP',
+                                status: 'Unggah Dokumen',
+                                optionalImagePath: File(
+                                    _completingDocsController.ktpImage.path),
+                                onTap: () {
+                                  print('foto KTP');
+                                  Get.to(() => TakeKTPPage(
+                                        camera: firstCamera,
+                                      ));
+                                },
+                              );
+                      }),
+                      SizedBox(height: 12),
 
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 18),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Tanggal masa berlaku',
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          Container(
-                            width: deviceWidth,
-                            height: 50,
-                            margin: EdgeInsets.only(top: 8),
-                            padding: EdgeInsets.only(left: 8),
-                            decoration: isExpDateActive
-                                ? MyStyle.textBoxActive()
-                                : MyStyle.textBoxInActive(),
-                            child: TextFormField(
-                              focusNode: expDateFocus,
-                              decoration: MyStyle.myInputDecor('25/10/2000'),
-                              textInputAction: TextInputAction.next,
-                              validator: (String? value) {
-                                return (value != null && value.contains('+62'))
-                                    ? 'Tidak Menggunakan +62'
-                                    : null;
-                              },
-                              onEditingComplete: () {
-                                FocusScope.of(context).nextFocus();
-                              },
+                      // Nama Lengkap
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 18),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Nomor KTP',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500),
                             ),
-                          ),
-                          SizedBox(height: 4),
-                          Text(
-                            'Isi dengan yang tertera di KTP',
-                            style: TextStyle(fontSize: 14, color: Colors.grey),
-                          ),
-                          SizedBox(height: 20),
-                        ],
+                            Container(
+                              width: deviceWidth,
+                              height: 50,
+                              margin: EdgeInsets.only(top: 8),
+                              padding: EdgeInsets.only(left: 8),
+                              decoration: isNoKtpActive
+                                  ? MyStyle.textBoxActive()
+                                  : MyStyle.textBoxInActive(),
+                              child: TextFormField(
+                                focusNode: noKtpFocus,
+                                decoration: MyStyle.myInputDecor(
+                                    'cth : 12345678900000'),
+                                textInputAction: TextInputAction.next,
+                                validator: (String? value) {
+                                  return (value != null &&
+                                          value.contains('+62'))
+                                      ? 'Tidak Menggunakan +62'
+                                      : null;
+                                },
+                                onEditingComplete: () {
+                                  FocusScope.of(context).nextFocus();
+                                },
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+
+                      // tanggal lahir
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 18),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Tanggal lahir',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            Container(
+                              width: deviceWidth,
+                              height: 50,
+                              margin: EdgeInsets.only(top: 8),
+                              padding: EdgeInsets.only(left: 8),
+                              decoration: isbDateActive
+                                  ? MyStyle.textBoxActive()
+                                  : MyStyle.textBoxInActive(),
+                              child: TextFormField(
+                                focusNode: bDateFocus,
+                                decoration: MyStyle.myInputDecor('25/10/2000'),
+                                textInputAction: TextInputAction.next,
+                                validator: (String? value) {
+                                  return (value != null &&
+                                          value.contains('+62'))
+                                      ? 'Tidak Menggunakan +62'
+                                      : null;
+                                },
+                                onTap: () {
+                                  showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(2025),
+                                  );
+                                },
+                                onEditingComplete: () {
+                                  FocusScope.of(context).nextFocus();
+                                },
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                          ],
+                        ),
+                      ),
+
+                      // tempat lahir
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 18),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Tempat lahir',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            Container(
+                              width: deviceWidth,
+                              height: 50,
+                              margin: EdgeInsets.only(top: 8),
+                              padding: EdgeInsets.only(left: 8),
+                              decoration: isbPlaceActive
+                                  ? MyStyle.textBoxActive()
+                                  : MyStyle.textBoxInActive(),
+                              child: TextFormField(
+                                focusNode: bPlaceFocus,
+                                decoration:
+                                    MyStyle.myInputDecor('cth : Balikpapan'),
+                                textInputAction: TextInputAction.next,
+                                validator: (String? value) {
+                                  return (value != null &&
+                                          value.contains('+62'))
+                                      ? 'Tidak Menggunakan +62'
+                                      : null;
+                                },
+                                onEditingComplete: () {
+                                  FocusScope.of(context).nextFocus();
+                                },
+                              ),
+                            ),
+                            SizedBox(height: 4),
+                            Text(
+                              'Isi dengan yang tertera di KTP',
+                              style:
+                                  TextStyle(fontSize: 14, color: Colors.grey),
+                            ),
+                            SizedBox(height: 20),
+                          ],
+                        ),
+                      ),
+
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 18),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Tanggal masa berlaku',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            Container(
+                              width: deviceWidth,
+                              height: 50,
+                              margin: EdgeInsets.only(top: 8),
+                              padding: EdgeInsets.only(left: 8),
+                              decoration: isExpDateActive
+                                  ? MyStyle.textBoxActive()
+                                  : MyStyle.textBoxInActive(),
+                              child: TextFormField(
+                                focusNode: expDateFocus,
+                                decoration: MyStyle.myInputDecor('25/10/2000'),
+                                onTap: () => _selectDate(context),
+                                readOnly: true,
+                                onEditingComplete: () {
+                                  FocusScope.of(context).nextFocus();
+                                },
+                              ),
+                            ),
+                            SizedBox(height: 4),
+                            Text(
+                              'Isi dengan yang tertera di KTP',
+                              style:
+                                  TextStyle(fontSize: 14, color: Colors.grey),
+                            ),
+                            SizedBox(height: 20),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
 
               // button
               Container(
-                height: 100,
+                height: 80,
                 padding: EdgeInsets.symmetric(horizontal: 18),
                 child: Column(
                   children: [

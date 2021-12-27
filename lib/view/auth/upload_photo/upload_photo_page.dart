@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:venpartner/view/auth/upload_photo/camera_photo_page.dart';
 import 'package:venpartner/view/auth/upload_photo/guide_photo_page.dart';
-import 'package:venpartner/view/camera_sample.dart';
 import 'package:venpartner/widgets/outlined_button.dart';
 import 'package:venpartner/widgets/venvice-button-disabled.dart';
 import 'package:venpartner/widgets/venvice-button.dart';
@@ -28,7 +27,7 @@ class _UploadPhotoPageState extends State<UploadPhotoPage> {
     final cameras = await availableCameras();
 
     // Get a specific camera from the list of available cameras.
-    firstCamera = cameras.first;
+    firstCamera = cameras[1];
   }
 
   @override
@@ -72,7 +71,7 @@ class _UploadPhotoPageState extends State<UploadPhotoPage> {
 
               Container(
                 width: deviceWidth,
-                height: deviceHeight - 184,
+                height: 300,
                 child: ListView(
                   children: [
                     //info
@@ -135,26 +134,28 @@ class _UploadPhotoPageState extends State<UploadPhotoPage> {
                 ),
               ),
 
+              Spacer(),
+
               // button
-              Container(
-                height: 100,
-                padding: EdgeInsets.symmetric(horizontal: 18),
-                child: Column(
-                  children: [
-                    Container(
-                        margin: EdgeInsets.all(18),
-                        child: formIsDone
-                            ? VenvicePrimaryBtn(
-                                'Simpan',
-                                onTap: () {
-                                  // Get.to(() => CompletingDocsPage());
-                                },
-                              )
-                            : VenviceBtnDisabled('Simpan')),
-                    Spacer(),
-                  ],
-                ),
-              )
+              // Container(
+              //   height: 80,
+              //   padding: EdgeInsets.symmetric(horizontal: 18),
+              //   child: Column(
+              //     children: [
+              //       Container(
+              //           margin: EdgeInsets.all(18),
+              //           child: formIsDone
+              //               ? VenvicePrimaryBtn(
+              //                   'Simpan',
+              //                   onTap: () {
+              //                     // Get.to(() => CompletingDocsPage());
+              //                   },
+              //                 )
+              //               : VenviceBtnDisabled('Simpan')),
+              //       Spacer(),
+              //     ],
+              //   ),
+              // )
             ],
           ),
         ),

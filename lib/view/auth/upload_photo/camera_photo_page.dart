@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 import 'package:venpartner/controller/completing_docs_controller.dart';
 import 'package:venpartner/view/auth/completing_document.dart';
-import 'package:venpartner/view/auth/upload_photo/upload_photo_page.dart';
 
 // A screen that allows users to take a picture using a given camera.
 class TakePhotoPage extends StatefulWidget {
@@ -24,8 +23,7 @@ class TakePhotoPage extends StatefulWidget {
 class TakePhotoPageState extends State<TakePhotoPage> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
-  final CompletingDocsController _completingDocsController =
-      Get.put(CompletingDocsController());
+  final _completingDocsController = Get.find<CompletingDocsController>();
 
   @override
   void initState() {
@@ -103,26 +101,22 @@ class TakePhotoPageState extends State<TakePhotoPage> {
           // Take the Picture in a try / catch block. If anything goes wrong,
           // catch the error.
           try {
-            // Ensure that the camera is initialized.
             await _initializeControllerFuture;
 
-            // Attempt to take a picture and get the file `image`
-            // where it was saved.
             final image = await _controller.takePicture();
-            _completingDocsController.profileImage =
-                await _controller.takePicture();
-            // If the picture was taken, display it on a new screen.
+            
+            _completingDocsController.updateImagePreview(0, image);
+
+            print(_completingDocsController.profileImage.path);
+
             await Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => DisplayPhotoPage(
-                  // Pass the automatically generated path to
-                  // the DisplayPictureScreen widget.
                   imagePath: image.path,
                 ),
               ),
             );
           } catch (e) {
-            // If an error occurs, log the error to the console.
             print(e);
           }
         },
@@ -177,7 +171,7 @@ class DisplayPhotoPage extends StatelessWidget {
         backgroundColor: Colors.black,
         // Provide an onPressed callback.
         onPressed: () async {
-          Get.to(CompletingDocsPage());
+          Get.close(3);
         },
         label: Text('Simpan Foto'),
         icon: Icon(Icons.save_rounded),

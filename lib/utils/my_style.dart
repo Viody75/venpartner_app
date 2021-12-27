@@ -67,4 +67,28 @@ class MyStyle {
       ],
     );
   }
+
+  static Color primaryColor() {
+    return Color(0xFF6A65D8);
+  }
+
+  static Color primaryDarkColor() {
+    return Color(0xFF1D2786);
+  }
+
+  static Color primaryLightColor() {
+    return Color(0xFFC9C7F1);
+  }
+
+  static Color secondaryColor() {
+    return Color(0xFFFFE6EB);
+  }
+
+  static Color secondaryDarkColor() {
+    return Color(0xFF5C4A4A);
+  }
+
+  static Color secondaryLightColor() {
+    return Color(0xFFFFF6F8);
+  }
 }

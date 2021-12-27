@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:venpartner/controller/completing_docs_controller.dart';
@@ -122,69 +121,76 @@ class CompletingDocsPage extends StatelessWidget {
                       ),
                     ),
 
-                    File(_completingDocsController.profileImage.path)
-                                .toString() ==
-                            File('').toString()
-                        ? UploadDocsWidget(
-                            name: 'Foto Profil',
-                            status: 'Unggah Dokumen',
-                            onTap: () {
-                              print('foto profil');
-                              Get.to(() => UploadPhotoPage());
-                            },
-                          )
-                        : UploadDocsTrueWidget(
-                            name: 'Foto Profil',
-                            status: 'Unggah Dokumen',
-                            optionalImagePath: File(
-                                _completingDocsController.profileImage.path),
-                            onTap: () {
-                              print('foto profil');
-                              Get.to(() => UploadPhotoPage());
-                            },
-                          ),
-
-                    File(_completingDocsController.ktpImage.path).toString() ==
-                            File('').toString()
-                        ? UploadDocsWidget(
-                            name: 'KTP',
-                            status: 'Unggah Dokumen',
-                            onTap: () {
-                              print('ktp');
-                              Get.to(() => UploadKtpPage());
-                            },
-                          )
-                        : UploadDocsTrueWidget(
-                            name: 'KTP',
-                            status: 'Unggah Dokumen',
-                            optionalImagePath:
-                                File(_completingDocsController.ktpImage.path),
-                            onTap: () {
-                              print('foto KTP');
-                              Get.to(() => UploadKtpPage());
-                            },
-                          ),
-
-                    File(_completingDocsController.simImage.path).toString() ==
-                            File('').toString()
-                        ? UploadDocsWidget(
-                            name: 'SIM',
-                            status: 'Unggah Dokumen',
-                            onTap: () {
-                              print('foto sim');
-                              Get.to(() => UploadSimPage());
-                            },
-                          )
-                        : UploadDocsTrueWidget(
-                            name: 'SIM',
-                            status: 'Unggah Dokumen',
-                            optionalImagePath:
-                                File(_completingDocsController.simImage.path),
-                            onTap: () {
-                              print('foto sim');
-                              Get.to(() => UploadSimPage());
-                            },
-                          ),
+                    GetBuilder<CompletingDocsController>(builder: (context) {
+                      return Column(
+                        children: [
+                          File(_completingDocsController.profileImage.path)
+                                      .toString() ==
+                                  File('').toString()
+                              ? UploadDocsWidget(
+                                  name: 'Foto Profil',
+                                  status: 'Unggah Dokumen',
+                                  onTap: () {
+                                    print('foto profil');
+                                    Get.to(() => UploadPhotoPage());
+                                  },
+                                )
+                              : UploadDocsTrueWidget(
+                                  name: 'Foto Profil',
+                                  status: 'Unggah Dokumen',
+                                  optionalImagePath: File(
+                                      _completingDocsController
+                                          .profileImage.path),
+                                  onTap: () {
+                                    print('foto profil');
+                                    Get.to(() => UploadPhotoPage());
+                                  },
+                                ),
+                          File(_completingDocsController.ktpImage.path)
+                                      .toString() ==
+                                  File('').toString()
+                              ? UploadDocsWidget(
+                                  name: 'KTP',
+                                  status: 'Unggah Dokumen',
+                                  onTap: () {
+                                    print('ktp');
+                                    Get.to(() => UploadKtpPage());
+                                  },
+                                )
+                              : UploadDocsTrueWidget(
+                                  name: 'KTP',
+                                  status: 'Unggah Dokumen',
+                                  optionalImagePath: File(
+                                      _completingDocsController.ktpImage.path),
+                                  onTap: () {
+                                    print('foto KTP');
+                                    Get.to(() => UploadKtpPage());
+                                  },
+                                ),
+                          File(_completingDocsController.simImage.path)
+                                      .toString() ==
+                                  File('').toString()
+                              ? UploadDocsWidget(
+                                  name: 'SIM',
+                                  status: 'Unggah Dokumen',
+                                  onTap: () {
+                                    print('foto sim');
+                                    Get.to(() => UploadSimPage());
+                                  },
+                                )
+                              : UploadDocsTrueWidget(
+                                  name: 'SIM',
+                                  status: 'Unggah Dokumen',
+                                  optionalImagePath: File(
+                                      _completingDocsController.simImage.path),
+                                  onTap: () {
+                                    print('foto sim');
+                                    Get.to(() => UploadSimPage());
+                                  },
+                                ),
+                        ],
+                      );
+                    }),
 
                     UploadDocsWidget(
                       name: 'Rekening Bank',

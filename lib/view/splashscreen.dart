@@ -27,7 +27,12 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Ini SplashScreen Yaah'),
+        child: Image.asset(
+          'assets/images/vv_partner_logo.png',
+          fit: BoxFit.cover,
+          width: 200,
+          height: 200,
+        ),
       ),
     );
   }

@@ -35,7 +35,7 @@ class _AuthNumberPageState extends State<AuthNumberPage> {
         child: Container(
           width: deviceWidth,
           height: deviceHeight,
-          child: ListView(
+          child: Column(
             children: [
               // top-nav
               Container(
@@ -69,7 +69,7 @@ class _AuthNumberPageState extends State<AuthNumberPage> {
                       height: 18,
                     ),
                     Text(
-                      'Halo Mitra!!',
+                      'Selamat datang!',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
@@ -181,6 +181,8 @@ class _AuthNumberPageState extends State<AuthNumberPage> {
                   ),
                 ),
               ),
+
+              Spacer(),
 
               // button
               Container(

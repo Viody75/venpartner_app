@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:venpartner/utils/my_style.dart';
 
 class VenviceSecondaryBtn extends StatelessWidget {
   const VenviceSecondaryBtn(this.name, {required this.onTap});
@@ -15,7 +16,7 @@ class VenviceSecondaryBtn extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(width: 1, color: Color(0xff6A65D8)),
+            border: Border.all(width: 1, color: MyStyle.primaryColor()),
             color: Colors.white,
           ),
           child: Material(
@@ -29,13 +30,13 @@ class VenviceSecondaryBtn extends StatelessWidget {
               splashColor: Colors.deepPurple[100],
               onTap: onTap,
               child: Container(
-                height: 50,
+                height: 40,
                 child: Center(
                   child: Text(
                     '$name',
                     style: TextStyle(
                         fontSize: 16,
-                        color: Color(0xff6A65D8),
+                        color: MyStyle.primaryColor(),
                         fontWeight: FontWeight.w500),
                   ),
                 ),

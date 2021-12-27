@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:venpartner/utils/my_style.dart';
 import 'package:venpartner/view/auth/completing_document.dart';
+import 'package:venpartner/view/auth/verify-acc-page.dart';
 import 'package:venpartner/widgets/venvice-button-disabled.dart';
 import 'package:venpartner/widgets/venvice-button.dart';
 
@@ -94,7 +95,7 @@ class _CompletingProfilePageState extends State<CompletingProfilePage> {
                       icon: Icon(Icons.arrow_back_ios_rounded),
                     ),
                     Text(
-                      'Lengkapi Profil Anda',
+                      'Daftar',
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
@@ -125,7 +126,11 @@ class _CompletingProfilePageState extends State<CompletingProfilePage> {
                           ),
                           Spacer(),
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              setState(() {
+                                formIsDone = true;
+                              });
+                            },
                             child: Icon(Icons.close),
                           )
                         ],
@@ -178,6 +183,150 @@ class _CompletingProfilePageState extends State<CompletingProfilePage> {
                               'Isi dengan yang tertera di KTP',
                               style:
                                   TextStyle(fontSize: 14, color: Colors.grey),
+                            ),
+                            SizedBox(height: 20),
+
+                            // Alamat
+                            Text(
+                              'Alamat tempat tinggal',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            Container(
+                              width: deviceWidth,
+                              height: 50,
+                              margin: EdgeInsets.only(top: 8),
+                              padding: EdgeInsets.only(left: 8),
+                              decoration:
+                                  isNameActive ? boxActive() : boxInActive(),
+                              child: TextFormField(
+                                focusNode: nameFocus,
+                                decoration: MyStyle.myInputDecor(
+                                    'Masukan nama alamat tempat tinggal'),
+                                textInputAction: TextInputAction.next,
+                                validator: (String? value) {
+                                  return (value != null &&
+                                          value.contains('+62'))
+                                      ? 'Tidak Menggunakan +62'
+                                      : null;
+                                },
+                                onEditingComplete: () {
+                                  FocusScope.of(context).nextFocus();
+                                },
+                              ),
+                            ),
+                            SizedBox(height: 4),
+                            Text(
+                              'Isi dengan yang tertera di KTP',
+                              style:
+                                  TextStyle(fontSize: 14, color: Colors.grey),
+                            ),
+                            SizedBox(height: 20),
+
+                            // Email
+                            Text(
+                              'Email',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            Container(
+                              width: deviceWidth,
+                              height: 50,
+                              margin: EdgeInsets.only(top: 8),
+                              padding: EdgeInsets.only(left: 8),
+                              decoration:
+                                  isNameActive ? boxActive() : boxInActive(),
+                              child: TextFormField(
+                                focusNode: nameFocus,
+                                decoration:
+                                    MyStyle.myInputDecor('Masukan email'),
+                                textInputAction: TextInputAction.next,
+                                validator: (String? value) {
+                                  return (value != null &&
+                                          value.contains('+62'))
+                                      ? 'Tidak Menggunakan +62'
+                                      : null;
+                                },
+                                onEditingComplete: () {
+                                  FocusScope.of(context).nextFocus();
+                                },
+                              ),
+                            ),
+                            SizedBox(height: 20),
+
+                            // Kata Sandi
+                            Text(
+                              'Kata sandi',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            Container(
+                              width: deviceWidth,
+                              height: 50,
+                              margin: EdgeInsets.only(top: 8),
+                              padding: EdgeInsets.only(left: 8),
+                              decoration:
+                                  isNameActive ? boxActive() : boxInActive(),
+                              child: TextFormField(
+                                focusNode: nameFocus,
+                                decoration:
+                                    MyStyle.myInputDecor('Masukan kata sandi'),
+                                textInputAction: TextInputAction.next,
+                                validator: (String? value) {
+                                  return (value != null &&
+                                          value.contains('+62'))
+                                      ? 'Tidak Menggunakan +62'
+                                      : null;
+                                },
+                                onEditingComplete: () {
+                                  FocusScope.of(context).nextFocus();
+                                },
+                              ),
+                            ),
+                            SizedBox(height: 4),
+                            Text(
+                              'Minimal 8 karakter',
+                              style:
+                                  TextStyle(fontSize: 14, color: Colors.grey),
+                            ),
+                            SizedBox(height: 20),
+
+                            // Ulang katasandi
+                            Text(
+                              'Ulang kata sandi',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            Container(
+                              width: deviceWidth,
+                              height: 50,
+                              margin: EdgeInsets.only(top: 8),
+                              padding: EdgeInsets.only(left: 8),
+                              decoration:
+                                  isNameActive ? boxActive() : boxInActive(),
+                              child: TextFormField(
+                                focusNode: nameFocus,
+                                decoration: MyStyle.myInputDecor(
+                                    'Masukan ulang kata sandi'),
+                                textInputAction: TextInputAction.next,
+                                validator: (String? value) {
+                                  return (value != null &&
+                                          value.contains('+62'))
+                                      ? 'Tidak Menggunakan +62'
+                                      : null;
+                                },
+                                onEditingComplete: () {
+                                  FocusScope.of(context).nextFocus();
+                                },
+                              ),
                             ),
                             SizedBox(height: 20),
 
@@ -249,220 +398,220 @@ class _CompletingProfilePageState extends State<CompletingProfilePage> {
                               height: 20,
                             ),
 
-                            // no. ponsel darurat
-                            Text(
-                              'Nomor Ponsel Darurat',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            Container(
-                              width: deviceWidth,
-                              height: 50,
-                              margin: EdgeInsets.only(top: 8),
-                              decoration: isNumberEmerActive
-                                  ? boxActive()
-                                  : boxInActive(),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: 80,
-                                    height: 50,
-                                    child: Center(
-                                      child: Row(
-                                        children: [
-                                          SizedBox(width: 6),
-                                          Image.asset(
-                                            'assets/images/indoflag.png',
-                                            width: 24,
-                                          ),
-                                          SizedBox(width: 6),
-                                          Text(
-                                            '+62',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                          VerticalDivider(
-                                            thickness: 2,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    width: 200,
-                                    height: 50,
-                                    child: TextFormField(
-                                      focusNode: numberEmergencyFocus,
-                                      decoration: MyStyle.myInputDecor(
-                                          'Masukan nomor ponsel'),
-                                      textInputAction: TextInputAction.next,
-                                      validator: (String? value) {
-                                        return (value != null &&
-                                                value.contains('+62'))
-                                            ? 'Tidak Menggunakan +62'
-                                            : null;
-                                      },
-                                      onEditingComplete: () {
-                                        FocusScope.of(context).nextFocus();
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 4),
-                            Text(
-                              'Untuk menghubungi anda jika nomor ponsel utama tidak aktif',
-                              style:
-                                  TextStyle(fontSize: 14, color: Colors.grey),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
+                            // // no. ponsel darurat
+                            // Text(
+                            //   'Nomor Ponsel Darurat',
+                            //   style: TextStyle(
+                            //       fontSize: 16,
+                            //       color: Colors.black,
+                            //       fontWeight: FontWeight.w500),
+                            // ),
+                            // Container(
+                            //   width: deviceWidth,
+                            //   height: 50,
+                            //   margin: EdgeInsets.only(top: 8),
+                            //   decoration: isNumberEmerActive
+                            //       ? boxActive()
+                            //       : boxInActive(),
+                            //   child: Row(
+                            //     children: [
+                            //       Container(
+                            //         width: 80,
+                            //         height: 50,
+                            //         child: Center(
+                            //           child: Row(
+                            //             children: [
+                            //               SizedBox(width: 6),
+                            //               Image.asset(
+                            //                 'assets/images/indoflag.png',
+                            //                 width: 24,
+                            //               ),
+                            //               SizedBox(width: 6),
+                            //               Text(
+                            //                 '+62',
+                            //                 style: TextStyle(
+                            //                   fontWeight: FontWeight.bold,
+                            //                   fontSize: 16,
+                            //                 ),
+                            //               ),
+                            //               VerticalDivider(
+                            //                 thickness: 2,
+                            //               )
+                            //             ],
+                            //           ),
+                            //         ),
+                            //       ),
+                            //       Container(
+                            //         width: 200,
+                            //         height: 50,
+                            //         child: TextFormField(
+                            //           focusNode: numberEmergencyFocus,
+                            //           decoration: MyStyle.myInputDecor(
+                            //               'Masukan nomor ponsel'),
+                            //           textInputAction: TextInputAction.next,
+                            //           validator: (String? value) {
+                            //             return (value != null &&
+                            //                     value.contains('+62'))
+                            //                 ? 'Tidak Menggunakan +62'
+                            //                 : null;
+                            //           },
+                            //           onEditingComplete: () {
+                            //             FocusScope.of(context).nextFocus();
+                            //           },
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
+                            // SizedBox(height: 4),
+                            // Text(
+                            //   'Untuk menghubungi anda jika nomor ponsel utama tidak aktif',
+                            //   style:
+                            //       TextStyle(fontSize: 14, color: Colors.grey),
+                            // ),
+                            // SizedBox(
+                            //   height: 20,
+                            // ),
 
-                            // domisili
-                            Text(
-                              'Domisili',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            Container(
-                              width: deviceWidth,
-                              height: 50,
-                              margin: EdgeInsets.only(top: 8),
-                              padding: EdgeInsets.only(left: 8, right: 8),
-                              decoration: isDomisiliActive
-                                  ? boxActive()
-                                  : boxInActive(),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: 240,
-                                    height: 50,
-                                    child: TextFormField(
-                                      focusNode: domisiliFocus,
-                                      decoration: MyStyle.myInputDecor(
-                                          'Masukan nomor ponsel'),
-                                      textInputAction: TextInputAction.next,
-                                      validator: (String? value) {
-                                        return (value != null &&
-                                                value.contains('+62'))
-                                            ? 'Tidak Menggunakan +62'
-                                            : null;
-                                      },
-                                      onEditingComplete: () {
-                                        FocusScope.of(context).nextFocus();
-                                      },
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  IconButton(
-                                      onPressed: () {
-                                        Get.defaultDialog(
-                                          title: "Pilih Domisili",
-                                          backgroundColor: Colors.white,
-                                          barrierDismissible: false,
-                                          radius: 10,
-                                          content: Container(
-                                              height: 300,
-                                              child: Column(
-                                                children: [
-                                                  Container(
-                                                    height: 50,
-                                                    margin:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 12),
-                                                    // decoration: isSearchActive
-                                                    //     ? MyStyle.textBoxActive()
-                                                    //     : MyStyle.textBoxInActive(),
-                                                    decoration: MyStyle
-                                                        .textBoxInActive(),
-                                                    child: Row(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Container(
-                                                          width: 50,
-                                                          height: 50,
-                                                          child: Center(
-                                                            child: Icon(
-                                                                Icons.search),
-                                                          ),
-                                                        ),
-                                                        Expanded(
-                                                          child: TextFormField(
-                                                            // focusNode: searchFocus,
-                                                            decoration: MyStyle
-                                                                .myInputDecor(
-                                                                    'Cari Domisili'),
-                                                            textInputAction:
-                                                                TextInputAction
-                                                                    .next,
-                                                            onEditingComplete:
-                                                                () {
-                                                              FocusScope.of(
-                                                                      context)
-                                                                  .nextFocus();
-                                                            },
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  Spacer(),
-                                                  Container(
-                                                    height: 240,
-                                                    width: 300,
-                                                    margin:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 6),
-                                                    child: ListView.separated(
-                                                      itemCount: 20,
-                                                      itemBuilder:
-                                                          (context, index) {
-                                                        return InkWell(
-                                                          onTap: () {
-                                                            Get.back();
-                                                          },
-                                                          child: Container(
-                                                            child: Text(
-                                                              'Balikpapan',
-                                                              style: TextStyle(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                      separatorBuilder:
-                                                          (context, index) {
-                                                        return Divider();
-                                                      },
-                                                    ),
-                                                  ),
-                                                ],
-                                              )),
-                                        );
-                                        setState(() {
-                                          formIsDone = true;
-                                        });
-                                      },
-                                      icon: Icon(
-                                          Icons.keyboard_arrow_down_rounded))
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
+                            // // domisili
+                            // Text(
+                            //   'Domisili',
+                            //   style: TextStyle(
+                            //       fontSize: 16,
+                            //       color: Colors.black,
+                            //       fontWeight: FontWeight.w500),
+                            // ),
+                            // Container(
+                            //   width: deviceWidth,
+                            //   height: 50,
+                            //   margin: EdgeInsets.only(top: 8),
+                            //   padding: EdgeInsets.only(left: 8, right: 8),
+                            //   decoration: isDomisiliActive
+                            //       ? boxActive()
+                            //       : boxInActive(),
+                            //   child: Row(
+                            //     children: [
+                            //       Container(
+                            //         width: 240,
+                            //         height: 50,
+                            //         child: TextFormField(
+                            //           focusNode: domisiliFocus,
+                            //           decoration: MyStyle.myInputDecor(
+                            //               'Masukan nomor ponsel'),
+                            //           textInputAction: TextInputAction.next,
+                            //           validator: (String? value) {
+                            //             return (value != null &&
+                            //                     value.contains('+62'))
+                            //                 ? 'Tidak Menggunakan +62'
+                            //                 : null;
+                            //           },
+                            //           onEditingComplete: () {
+                            //             FocusScope.of(context).nextFocus();
+                            //           },
+                            //         ),
+                            //       ),
+                            //       Spacer(),
+                            //       IconButton(
+                            //           onPressed: () {
+                            //             Get.defaultDialog(
+                            //               title: "Pilih Domisili",
+                            //               backgroundColor: Colors.white,
+                            //               barrierDismissible: false,
+                            //               radius: 10,
+                            //               content: Container(
+                            //                   height: 300,
+                            //                   child: Column(
+                            //                     children: [
+                            //                       Container(
+                            //                         height: 50,
+                            //                         margin:
+                            //                             EdgeInsets.symmetric(
+                            //                                 horizontal: 12),
+                            //                         // decoration: isSearchActive
+                            //                         //     ? MyStyle.textBoxActive()
+                            //                         //     : MyStyle.textBoxInActive(),
+                            //                         decoration: MyStyle
+                            //                             .textBoxInActive(),
+                            //                         child: Row(
+                            //                           crossAxisAlignment:
+                            //                               CrossAxisAlignment
+                            //                                   .center,
+                            //                           children: [
+                            //                             Container(
+                            //                               width: 50,
+                            //                               height: 50,
+                            //                               child: Center(
+                            //                                 child: Icon(
+                            //                                     Icons.search),
+                            //                               ),
+                            //                             ),
+                            //                             Expanded(
+                            //                               child: TextFormField(
+                            //                                 // focusNode: searchFocus,
+                            //                                 decoration: MyStyle
+                            //                                     .myInputDecor(
+                            //                                         'Cari Domisili'),
+                            //                                 textInputAction:
+                            //                                     TextInputAction
+                            //                                         .next,
+                            //                                 onEditingComplete:
+                            //                                     () {
+                            //                                   FocusScope.of(
+                            //                                           context)
+                            //                                       .nextFocus();
+                            //                                 },
+                            //                               ),
+                            //                             ),
+                            //                           ],
+                            //                         ),
+                            //                       ),
+                            //                       Spacer(),
+                            //                       Container(
+                            //                         height: 240,
+                            //                         width: 300,
+                            //                         margin:
+                            //                             EdgeInsets.symmetric(
+                            //                                 horizontal: 6),
+                            //                         child: ListView.separated(
+                            //                           itemCount: 20,
+                            //                           itemBuilder:
+                            //                               (context, index) {
+                            //                             return InkWell(
+                            //                               onTap: () {
+                            //                                 Get.back();
+                            //                               },
+                            //                               child: Container(
+                            //                                 child: Text(
+                            //                                   'Balikpapan',
+                            //                                   style: TextStyle(
+                            //                                       fontWeight:
+                            //                                           FontWeight
+                            //                                               .bold),
+                            //                                 ),
+                            //                               ),
+                            //                             );
+                            //                           },
+                            //                           separatorBuilder:
+                            //                               (context, index) {
+                            //                             return Divider();
+                            //                           },
+                            //                         ),
+                            //                       ),
+                            //                     ],
+                            //                   )),
+                            //             );
+                            //             setState(() {
+                            //               formIsDone = true;
+                            //             });
+                            //           },
+                            //           icon: Icon(
+                            //               Icons.keyboard_arrow_down_rounded))
+                            //     ],
+                            //   ),
+                            // ),
+                            // SizedBox(
+                            //   height: 20,
+                            // ),
 
                             // alamat
                             Text(
@@ -498,7 +647,40 @@ class _CompletingProfilePageState extends State<CompletingProfilePage> {
                                 },
                               ),
                             ),
-                            SizedBox(height: 10),
+                            SizedBox(height: 20),
+
+                            // Kode Referal
+                            Text(
+                              'Kode referral',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            Container(
+                              width: deviceWidth,
+                              height: 50,
+                              margin: EdgeInsets.only(top: 8),
+                              padding: EdgeInsets.only(left: 8),
+                              decoration:
+                                  isNameActive ? boxActive() : boxInActive(),
+                              child: TextFormField(
+                                focusNode: nameFocus,
+                                decoration: MyStyle.myInputDecor(
+                                    'Masukan kode referral'),
+                                textInputAction: TextInputAction.next,
+                                validator: (String? value) {
+                                  return (value != null &&
+                                          value.contains('+62'))
+                                      ? 'Tidak Menggunakan +62'
+                                      : null;
+                                },
+                                onEditingComplete: () {
+                                  FocusScope.of(context).nextFocus();
+                                },
+                              ),
+                            ),
+                            SizedBox(height: 20),
                           ],
                         ),
                       ),
@@ -511,7 +693,7 @@ class _CompletingProfilePageState extends State<CompletingProfilePage> {
                             ? VenvicePrimaryBtn(
                                 'Selanjutnya',
                                 onTap: () {
-                                  Get.to(() => CompletingDocsPage());
+                                  Get.to(() => VerifyAccount());
                                 },
                               )
                             : VenviceBtnDisabled('Selanjutnya')),

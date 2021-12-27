@@ -4,7 +4,25 @@ import 'dart:io';
 
 class CompletingDocsController extends GetxController {
   late CameraController _cameraController;
-  late XFile profileImage = XFile('');
-  late XFile ktpImage = XFile('');
-  late XFile simImage = XFile('');
+  XFile profileImage = XFile('');
+  XFile ktpImage = XFile('');
+  XFile simImage = XFile('');
+
+  void updateImagePreview(int i, XFile xFile) async {
+    switch (i) {
+      case 0:
+        profileImage = xFile;
+        update();
+        break;
+      case 1:
+        ktpImage = xFile;
+        update();
+        break;
+      case 2:
+        simImage = xFile;
+        update();
+        break;
+      default:
+    }
+  }
 }

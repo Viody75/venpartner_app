@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:venpartner/view/auth/completing_document.dart';
 import 'package:venpartner/view/auth/completing_profile.dart';
 
 class VerifyAccount extends StatefulWidget {
@@ -129,7 +130,7 @@ class _VerifyAccountState extends State<VerifyAccount> {
                             Spacer(),
                             InkWell(
                               onTap: () {
-                                Get.to(() => CompletingProfilePage());
+                                Get.to(() => CompletingDocsPage());
                               },
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,

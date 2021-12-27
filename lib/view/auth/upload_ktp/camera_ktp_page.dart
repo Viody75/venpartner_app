@@ -103,20 +103,14 @@ class TakeKTPPageState extends State<TakeKTPPage> {
           // Take the Picture in a try / catch block. If anything goes wrong,
           // catch the error.
           try {
-            // Ensure that the camera is initialized.
             await _initializeControllerFuture;
-
-            // Attempt to take a picture and get the file `image`
-            // where it was saved.
             final image = await _controller.takePicture();
-            _completingDocsController.ktpImage =
-                await _controller.takePicture();
-            // If the picture was taken, display it on a new screen.
+
+            _completingDocsController.updateImagePreview(1, image);
+
             await Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => DisplayPhotoPage(
-                  // Pass the automatically generated path to
-                  // the DisplayPictureScreen widget.
                   imagePath: image.path,
                 ),
               ),
@@ -177,7 +171,7 @@ class DisplayPhotoPage extends StatelessWidget {
         backgroundColor: Colors.black,
         // Provide an onPressed callback.
         onPressed: () async {
-          Get.to(CompletingDocsPage());
+          Get.close(2);
         },
         label: Text('Simpan Foto'),
         icon: Icon(Icons.save_rounded),

@@ -1,12 +1,18 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:venpartner/controller/completing_docs_controller.dart';
 import 'package:venpartner/utils/my_style.dart';
 import 'package:venpartner/view/auth/upload_sim/camera_sim_page.dart';
 import 'package:venpartner/view/auth/upload_sim/guide_sim_page.dart';
 import 'package:venpartner/widgets/outlined_button.dart';
 import 'package:venpartner/widgets/venvice-button-disabled.dart';
 import 'package:venpartner/widgets/venvice-button.dart';
+
+import '../upload_docs_true_widget.dart';
+import '../upload_docs_widget.dart';
 
 class UploadSimPage extends StatefulWidget {
   const UploadSimPage({Key? key}) : super(key: key);
@@ -16,6 +22,22 @@ class UploadSimPage extends StatefulWidget {
 }
 
 class _UploadSimPageState extends State<UploadSimPage> {
+  final _completingDocsController = Get.find<CompletingDocsController>();
+
+  // date
+  DateTime selectedDate = DateTime.now();
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
+  }
+
   bool formIsDone = false;
 
   final noSimFocus = FocusNode();
@@ -123,35 +145,34 @@ class _UploadSimPageState extends State<UploadSimPage> {
                     ),
                     SizedBox(height: 12),
 
-                    //upload foto
-                    Container(
-                      width: deviceWidth,
-                      height: 100,
-                      margin: EdgeInsets.symmetric(horizontal: 18),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            'assets/images/docs-placeholder.png',
-                            width: 80,
-                            height: 80,
-                          ),
-                          SizedBox(width: 24),
-                          Text(
-                            'SIM',
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                          Spacer(),
-                          OutlinedBtn('Ambil Foto', onTap: () {
-                            formIsDone = true;
-                            Get.to(() => TakeSIMPage(
-                                  // Pass the appropriate camera to the TakePictureScreen widget.
-                                  camera: firstCamera,
-                                ));
-                          }, radius: 18, dWidth: 100, dHeight: 26)
-                        ],
-                      ),
-                    ),
+                    //upload sim
+                    GetBuilder<CompletingDocsController>(builder: (context) {
+                      return File(_completingDocsController.ktpImage.path)
+                                  .toString() ==
+                              File('').toString()
+                          ? UploadDocsWidget(
+                              name: 'SIM',
+                              status: 'Unggah Dokumen',
+                              onTap: () {
+                                print('sim');
+                                Get.to(() => TakeSIMPage(
+                                      camera: firstCamera,
+                                    ));
+                              },
+                            )
+                          : UploadDocsTrueWidget(
+                              name: 'SIM',
+                              status: 'Unggah Dokumen',
+                              optionalImagePath:
+                                  File(_completingDocsController.ktpImage.path),
+                              onTap: () {
+                                print('foto sim');
+                                Get.to(() => TakeSIMPage(
+                                      camera: firstCamera,
+                                    ));
+                              },
+                            );
+                    }),
                     SizedBox(height: 12),
 
                     // Nama Lengkap
@@ -219,11 +240,8 @@ class _UploadSimPageState extends State<UploadSimPage> {
                               focusNode: expDateFocus,
                               decoration: MyStyle.myInputDecor('25/10/2000'),
                               textInputAction: TextInputAction.next,
-                              validator: (String? value) {
-                                return (value != null && value.contains('+62'))
-                                    ? 'Tidak Menggunakan +62'
-                                    : null;
-                              },
+                              onTap: () => _selectDate(context),
+                              readOnly: true,
                               onEditingComplete: () {
                                 FocusScope.of(context).nextFocus();
                               },
